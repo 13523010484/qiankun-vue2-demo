@@ -1,10 +1,13 @@
 const { name } = require("./package");
+
 module.exports = {
   devServer: {
-    port: 8001, // 启动项目时的端口号
+    port: 8081, // 启动项目时的端口号
+    disableHostCheck: true, // 关闭主机检查，保证子应用可以被主应用fetch到
     headers: {
       "Access-Control-Allow-Origin": "*",
     },
+    before: require("./src/mock/index.js"),
   },
   configureWebpack: {
     output: {

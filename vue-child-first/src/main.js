@@ -5,8 +5,13 @@ import App from "./App.vue";
 import routes from "./router";
 import store from "./store";
 import actions from "./shared/actions.js";
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
+import axios from "axios";
 
+Vue.use(ElementUI);
 Vue.config.productionTip = false;
+Vue.prototype.$axios = axios;
 
 let router = null;
 let instance = null;
@@ -34,6 +39,7 @@ export async function bootstrap() {
   console.log("[vue] vue app bootstraped");
 }
 export async function mount(props) {
+  console.log("props::", props);
   if (props) {
     actions.setActions(props);
   }

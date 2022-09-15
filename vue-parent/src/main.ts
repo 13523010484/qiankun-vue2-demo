@@ -3,13 +3,15 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import { registerMicroApps, start } from "qiankun";
+import axios from "axios";
 
 Vue.config.productionTip = false;
+Vue.prototype.$axios = axios;
 
 registerMicroApps([
   {
     name: "app1",
-    entry: "//localhost:8001",
+    entry: "//localhost:8081",
     container: "#container",
     activeRule: ["/vue-child-first"],
     props: {
@@ -18,7 +20,7 @@ registerMicroApps([
   },
   {
     name: "app2",
-    entry: "//localhost:8002",
+    entry: "//localhost:8082",
     container: "#container",
     activeRule: ["/vue-child-second"],
   },

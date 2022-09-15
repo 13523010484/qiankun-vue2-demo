@@ -1,5 +1,16 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="home">
+    parent page about
+    <button>count:{{ count }}</button>
   </div>
 </template>
+
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { State } from "vuex-class";
+
+@Component({}) 
+export default class App extends Vue {
+  @State((state) => state.count) count;
+}
+</script>

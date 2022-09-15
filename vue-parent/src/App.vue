@@ -5,6 +5,9 @@
         <router-link to="/">Home</router-link>
       </span>
       <span style="margin-right: 20px">
+        <router-link to="/about">About</router-link>
+      </span>
+      <span style="margin-right: 20px">
         <router-link to="/vue-child-first">vue-child-first</router-link></span
       >
       <span style="margin-right: 20px">
@@ -20,10 +23,12 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { State } from "vuex-class";
 import actions from "./actions";
 
 @Component({})
 export default class App extends Vue {
+  @State((state) => state.uid) uid;
   private mainInfo: any = null;
 
   mounted() {
@@ -36,6 +41,7 @@ export default class App extends Vue {
   login() {
     actions.setGlobalState({
       token: "token_123456",
+      uid: this.uid,
     });
   }
 }
