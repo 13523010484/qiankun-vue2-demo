@@ -2,24 +2,25 @@
   <div class="about">
     <p>vue-child-first about page</p>
     <p>使用mapState...</p>
-    <button @click="handleGetCurDate">
+    <el-button @click="handleGetCurDate">
       当前日期::{{ count }} || {{ curDate }}
-    </button>
-    <p>doneTodos::{{ JSON.stringify(doneTodos) }}</p>
-    <p>doneTodosCount::{{ doneTodosCount }}</p>
-    <p>getTodoById::{{ getTodoById(2) }}</p>
-    <button @click="handleGetExtralParams">
+    </el-button>
+    <!-- <p>doneTodos::{{ JSON.stringify(doneTodos) }}</p>
+    <p>doneTodosCount::{{ doneTodosCount }}</p> -->
+    <!-- <p>getTodoById::{{ getTodoById(2) }}</p> -->
+    <el-button @click="handleGetExtralParams">
       handleGetExtralParams::{{ JSON.stringify(extralParams) }}
-    </button>
-    <button @click="handleGetCommitIsObject">
+    </el-button>
+    <el-button @click="handleGetCommitIsObject">
       handleGetCommitIsObject::{{ JSON.stringify(commitIsObject) }}
-    </button>
-    <button @click="handleGetListData">获取mock的数据</button>
+    </el-button>
+    <el-button @click="handleGetListData">获取mock的数据</el-button>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+// import { mapState, mapGetters } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "about",
@@ -43,8 +44,19 @@ export default {
   //   }),
   // },
   computed: {
-    ...mapState(["count", "curDate", "extralParams", "commitIsObject"]),
-    ...mapGetters(["doneTodos", "doneTodosCount", "getTodoById"]),
+    // ...mapState(["count", "curDate", "extralParams", "commitIsObject"]),
+    ...mapState({
+      count: (state) => state.about.count,
+      curDate: (state) => state.about.curDate,
+      extralParams: (state) => state.about.extralParams,
+      commitIsObject: (state) => state.about.commitIsObject,
+    }),
+    // ...mapGetters(["doneTodos", "doneTodosCount", "getTodoById"]),
+    // ...mapGetters({
+    //   doneTodos: (state) => state.about.doneTodos,
+    //   doneTodosCount: (state) => state.about.doneTodosCount,
+    //   getTodoById: (state) => state.about.getTodoById,
+    // }),
   },
   methods: {
     handleGetCurDate() {
