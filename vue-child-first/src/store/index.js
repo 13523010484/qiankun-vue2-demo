@@ -1,10 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import modules from "./modules/index";
+import { loadModules } from "./util";
+
+const { modules } = loadModules();
 
 Vue.use(Vuex);
-
-console.log("modules::", modules);
 
 export default new Vuex.Store({
   modules,
