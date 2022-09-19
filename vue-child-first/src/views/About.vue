@@ -2,13 +2,13 @@
   <div class="about">
     <p>vue-child-first about page</p>
     <p>使用mapState...</p>
-    <el-button @click="handleGetCurDate">
-      当前日期::{{ count }} || {{ curDate }}
-    </el-button>
-    <!-- <p>doneTodos::{{ JSON.stringify(doneTodos) }}</p>
-    <p>doneTodosCount::{{ doneTodosCount }}</p> -->
-    <!-- <p>getTodoById::{{ getTodoById(2) }}</p> -->
-    <el-button @click="handleGetExtralParams">
+    <el-button @click="handleCurDate"> 当前日期::{{ curDate }}</el-button>
+    <p>doneTodos::{{ JSON.stringify(doneTodos) }}</p>
+    <p>doneTodosCount::{{ doneTodosCount }}</p>
+    <p>getTodoById::{{ getTodoById(2) }}</p>
+    <el-button
+      @click="handleGetExtralParams({ id: '0', name: 'jqh', desc: 'desc' })"
+    >
       handleGetExtralParams::{{ JSON.stringify(extralParams) }}
     </el-button>
     <el-button @click="handleGetCommitIsObject">
@@ -19,8 +19,9 @@
 </template>
 
 <script>
-// import { mapState, mapGetters } from "vuex";
-import { mapState } from "vuex";
+// import { mapState, mapMutations, mapGetters } from "vuex";
+import { createNamespacedHelpers } from "vuex";
+const { mapState, mapMutations, mapGetters } = createNamespacedHelpers("about");
 
 export default {
   name: "about",
@@ -45,36 +46,31 @@ export default {
   // },
   computed: {
     // ...mapState(["count", "curDate", "extralParams", "commitIsObject"]),
-    ...mapState({
-      count: (state) => state.about.count,
-      curDate: (state) => state.about.curDate,
-      extralParams: (state) => state.about.extralParams,
-      commitIsObject: (state) => state.about.commitIsObject,
-    }),
-    // ...mapGetters(["doneTodos", "doneTodosCount", "getTodoById"]),
-    // ...mapGetters({
-    //   doneTodos: (state) => state.about.doneTodos,
-    //   doneTodosCount: (state) => state.about.doneTodosCount,
-    //   getTodoById: (state) => state.about.getTodoById,
+    // ...mapState({
+    //   count: (state) => state.about.count,
+    //   curDate: (state) => state.about.curDate,
+    //   extralParams: (state) => state.about.extralParams,
+    //   commitIsObject: (state) => state.about.commitIsObject,
     // }),
+    // ...mapState("about", ["curDate", "extralParams", "commitIsObject"]),
+    // ...mapGetters("about", ["doneTodos", "doneTodosCount", "getTodoById"]),
+    ...mapState(["curDate", "extralParams", "commitIsObject"]),
+    ...mapGetters(["doneTodos", "doneTodosCount", "getTodoById"]),
   },
   methods: {
-    handleGetCurDate() {
-      this.$store.commit("GET_CUR_DATE");
-      this.$store.commit("INCREMENT");
-    },
-
-    handleGetExtralParams() {
-      this.$store.commit("GET_EXTRAL_PARAMS", {
-        id: "0",
-        name: "jqh",
-        desc: "jqh test desc",
-      });
-    },
+    // ...mapMutations("about", {
+    //   handleCurDate: "GET_CUR_DATE",
+    //   handleGetExtralParams: "GET_EXTRAL_PARAMS",
+    //   getCommitIsObject: "GET_COMMIT_IS_OBJECT",
+    // }),
+    ...mapMutations({
+      handleCurDate: "GET_CUR_DATE",
+      handleGetExtralParams: "GET_EXTRAL_PARAMS",
+      getCommitIsObject: "GET_COMMIT_IS_OBJECT",
+    }),
 
     handleGetCommitIsObject() {
-      this.$store.commit({
-        type: "GET_COMMIT_IS_OBJECT",
+      this.getCommitIsObject({
         payload: {
           id: 0,
           amount: 10,

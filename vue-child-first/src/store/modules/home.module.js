@@ -1,5 +1,11 @@
 import { Message } from "element-ui";
-import { INCREMENT, GET_UID, RULE_TYPE_LIST, PAGE_DATA } from "./mutationTypes";
+import {
+  INCREMENT,
+  // GET_CUR_DATE,
+  GET_UID,
+  RULE_TYPE_LIST,
+  PAGE_DATA,
+} from "./mutationTypes";
 import {
   // ruleBaseBatchDeleteReq,
   // ruleBaseDeleteReq,
@@ -13,6 +19,7 @@ import {
 const moduleHome = {
   state: {
     count: 0,
+    curDate: "",
     uid: "",
     ruleTypeList: [],
     pageData: [],
@@ -25,6 +32,11 @@ const moduleHome = {
         state.count++;
       }
     },
+
+    // [GET_CUR_DATE]: (state) => {
+    //   console.log("home state::", state);
+    //   state.curDate = new Date().toLocaleString();
+    // },
 
     [GET_UID]: (state, payload) => {
       state.uid = payload.payload.uid;

@@ -17,6 +17,7 @@
     <el-button @click="handleGetPage({ payload: { id: 0 } })"
       >在action中异步获取接口 getPage</el-button
     >
+    <!-- <el-button @click="handleCurDate">获取当前日期::{{ curDate }}</el-button> -->
     <el-table :data="ruleTypeList" style="width: 60vw; margin: 15px auto">
       <el-table-column prop="createdBy" label="创建人" width="150">
       </el-table-column>
@@ -73,6 +74,7 @@ export default {
   computed: {
     ...mapState({
       count: (state) => state.home.count,
+      // curDate: (state) => state.home.curDate,
       ruleTypeList: (state) => state.home.ruleTypeList,
     }),
   },
@@ -94,6 +96,10 @@ export default {
         },
       });
     },
+
+    // handleCurDate() {
+    //   this.$store.commit("GET_CUR_DATE");
+    // },
 
     // handleChildIncrement() {
     //   this.$store.dispatch({

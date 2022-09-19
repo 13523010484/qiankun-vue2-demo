@@ -4,6 +4,8 @@ import modules from "./modules/index";
 
 Vue.use(Vuex);
 
+console.log("modules::", modules);
+
 export default new Vuex.Store({
   modules,
 });
