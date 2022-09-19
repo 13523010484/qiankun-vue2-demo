@@ -1,11 +1,5 @@
 import { Message } from "element-ui";
-import {
-  INCREMENT,
-  // GET_CUR_DATE,
-  GET_UID,
-  RULE_TYPE_LIST,
-  PAGE_DATA,
-} from "./mutationTypes";
+import { INCREMENT, GET_UID, RULE_TYPE_LIST, PAGE_DATA } from "./mutationTypes";
 import {
   // ruleBaseBatchDeleteReq,
   // ruleBaseDeleteReq,
@@ -16,75 +10,74 @@ import {
   // ruleBaseSaveReq,
 } from "@/api/index";
 
-const moduleHome = {
-  state: {
-    count: 0,
-    curDate: "",
-    uid: "",
-    ruleTypeList: [],
-    pageData: [],
+const state = () => ({
+  count: 0,
+  curDate: "",
+  uid: "",
+  ruleTypeList: [],
+  pageData: [],
+});
+
+const mutations = {
+  [INCREMENT]: (state, payload) => {
+    if (payload) {
+      state.count += payload.amount;
+    } else {
+      state.count++;
+    }
   },
-  mutations: {
-    [INCREMENT]: (state, payload) => {
-      if (payload) {
-        state.count += payload.amount;
-      } else {
-        state.count++;
-      }
-    },
 
-    // [GET_CUR_DATE]: (state) => {
-    //   console.log("home state::", state);
-    //   state.curDate = new Date().toLocaleString();
-    // },
-
-    [GET_UID]: (state, payload) => {
-      state.uid = payload.payload.uid;
-    },
-
-    [RULE_TYPE_LIST]: (state, params) => {
-      state.ruleTypeList = params;
-    },
-
-    [PAGE_DATA]: (state, params) => {
-      state.pageData = params;
-    },
+  [GET_UID]: (state, payload) => {
+    state.uid = payload.payload.uid;
   },
-  actions: {
-    incrementAsync: ({ commit }, payload) => {
-      setTimeout(() => {
-        commit("INCREMENT", payload);
-      }, 1000);
-    },
 
-    [INCREMENT]: ({ commit }) => {
-      commit("INCREMENT");
-    },
+  [RULE_TYPE_LIST]: (state, params) => {
+    state.ruleTypeList = params;
+  },
 
-    async getListReq({ dispatch, commit, state }, params) {
-      await dispatch("getPageReq", { payload: { id: 0 } });
-      ruleBaseListReq({
-        ...params.payload,
-        id: state.pageData[0]?.id,
-      }).then((res) => {
-        if (res.data.data.status === 200) {
-          commit("RULE_TYPE_LIST", res.data.data.list);
-        } else {
-          Message.error(res.data.data.message);
-        }
-      });
-    },
-
-    getPageReq({ commit }, params) {
-      return ruleBasePageReq(params.payload).then((res) => {
-        if (res.data.data.status === 200) {
-          commit("PAGE_DATA", res.data.data.list);
-        } else {
-          Message.error(res.data.data.message);
-        }
-      });
-    },
+  [PAGE_DATA]: (state, params) => {
+    state.pageData = params;
   },
 };
 
-export default moduleHome;
+const actions = {
+  incrementAsync: ({ commit }, payload) => {
+    setTimeout(() => {
+      commit("INCREMENT", payload);
+    }, 1000);
+  },
+
+  [INCREMENT]: ({ commit }) => {
+    commit("INCREMENT");
+  },
+
+  async getListReq({ dispatch, commit, state }, params) {
+    await dispatch("getPageReq", { payload: { id: 0 } });
+    ruleBaseListReq({
+      ...params.payload,
+      id: state.pageData[0]?.id,
+    }).then((res) => {
+      if (res.data.data.status === 200) {
+        commit("RULE_TYPE_LIST", res.data.data.list);
+      } else {
+        Message.error(res.data.data.message);
+      }
+    });
+  },
+
+  getPageReq({ commit }, params) {
+    return ruleBasePageReq(params.payload).then((res) => {
+      if (res.data.data.status === 200) {
+        commit("PAGE_DATA", res.data.data.list);
+      } else {
+        Message.error(res.data.data.message);
+      }
+    });
+  },
+};
+
+export default {
+  state,
+  mutations,
+  actions,
+};
